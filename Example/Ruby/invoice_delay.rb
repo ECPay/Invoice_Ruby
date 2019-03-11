@@ -1,11 +1,8 @@
 require 'ecpay_invoice'
 
-class YOURCONTROLLER < ApplicationController
-	# 暫存開立發票（預約開立發票）
-	def InvDelay
 		## 參數值為[PLEASE MODIFY]者，請每次測試時給予獨特值
 		inv_delay_dict = {
-			"RelateNumber"=>"PLEASE MODIFY", # 請帶30碼uid, ex: werntfg9os48trhw34etrwerh8ew2r
+			"RelateNumber"=>"PLEASEdsadsadsaMODIFY", # 請帶30碼uid, ex: werntfg9os48trhw34etrwerh8ew2r
 			"CustomerID"=>"",
 			"CustomerIdentifier"=>"",
 			"CustomerName"=>"綠先生",
@@ -14,10 +11,10 @@ class YOURCONTROLLER < ApplicationController
 			"CustomerEmail"=>"ying.wu@ecpay.com.tw",
 			"ClearanceMark"=>"",
 			"Print"=>"0",
-			"Donation"=>"1",
-			"LoveCode"=>"123456",
-			"CarruerType"=>"",
-			"CarruerNum"=>"",
+			"Donation"=>"2",
+			"LoveCode"=>"",
+			"CarruerType"=>"3",
+			"CarruerNum"=>"/.......",
 			"TaxType"=>"1",
 			"SalesAmount"=>"600",
 			"InvoiceRemark"=>"",
@@ -30,14 +27,13 @@ class YOURCONTROLLER < ApplicationController
 			"InvType"=>"07",
 			"DelayFlag"=>"2", # 延遲註記，僅可帶入'1'延遲開立、'2'觸發開立，當為'2'時須透過invoice_trigger進行觸發
 			"DelayDay"=>"15", # 延遲開立，當為延遲註記為'1'，延遲天數範圍為1至15天，當為延遲註記為'2'，延遲天數範圍為0至15天
-			"Tsr"=>"PLEASE MODIFY", # 交易單號，不可重複，請帶30碼uid, ex: nws349sher9toreterstuferyo345g，為invoice_trigger的觸發依據
+			"Tsr"=>"PLEASEdsadsadsaMODIFY", # 交易單號，不可重複，請帶30碼uid, ex: nws349sher9toreterstuferyo345g，為invoice_trigger的觸發依據
 			"PayType"=>"2", # 交易類別，請固定帶'2'
 			"PayAct"=>"ECPAY", # 交易類別名稱，請固定帶'ECPAY'
 			"NotifyURL"=>"" # 開立完成時通知會員系統的網址
 		}
 		
 		inv_delay = ECpayInvoice::InvoiceClientECPay.new # 將模組中的class實例化
-		res = inv_issue.ecpay_invoice_delay(inv_delay_dict)) # 對class中的對應的method傳入位置參數
+		res = inv_delay.ecpay_invoice_delay(inv_delay_dict) # 對class中的對應的method傳入位置參數
 		
-		render :text => res # 將回傳結果列印出來
-	end
+		puts res # 將回傳結果列印出來

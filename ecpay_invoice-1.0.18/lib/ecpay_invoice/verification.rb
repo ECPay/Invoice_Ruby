@@ -337,13 +337,13 @@ module ECpayInvoice
                     end
                 end
 
-                #e 統一編號[CustomerIdentifier]有值時 => CarruerType != 1, 2 or 3, *Donation = 2, print = 1
+                #e 統一編號[CustomerIdentifier]有值時 => CarruerType != 1, 2 or 3, *Donation = 0, print = 1
                 unless params['CustomerIdentifier'].to_s.empty?
                     if ['1', '2', '3'].include?(params['CarruerType'].to_s)
                         raise ECpayInvoiceRuleViolate, "[CarruerType] Cannot be 1, 2 or 3 when [CustomerIdentifier] is given."
                     end
-                    unless params['Donation'].to_s == '2' and params['Print'].to_s == '1'
-                        raise ECpayInvoiceRuleViolate, "[Print] must be 1 and [Donation] must be 2 when [CustomerIdentifier] is given."
+                    unless params['Donation'].to_s == '0' and params['Print'].to_s == '1'
+                        raise ECpayInvoiceRuleViolate, "[Print] must be 1 and [Donation] must be 0 when [CustomerIdentifier] is given."
                     end
                 end
 
@@ -363,7 +363,7 @@ module ECpayInvoice
                     unless params['CustomerID'].to_s.empty?
                         raise ECpayInvoiceRuleViolate, "[CustomerID] must be empty when [CarruerType] is 3."
                     end
-                    if /^\/[A-Za-z0-9\s+-]{7}$/.match(params['CarruerNum']).nil?
+                    if /^\/[A-Za-z0-9\s+-.]{7}$/.match(params['CarruerNum']).nil?
                         raise ECpayInvoiceRuleViolate, "[CarruerNum] must start with '/' followed by 7 alphabet and number characters when [CarruerType] is 3."
                     end
                 else
@@ -378,10 +378,10 @@ module ECpayInvoice
                     unless params['Print'].to_s == '0'
                         raise ECpayInvoiceRuleViolate, "[Print] must be 0 when [Donation] is 1."
                     end
-                # Donation = 2 => LoveCode不能有值
-                elsif params['Donation'].to_s == '2'
+                # Donation = 0 => LoveCode不能有值
+                elsif params['Donation'].to_s == '0'
                     unless params['LoveCode'].to_s.empty?
-                        raise ECpayInvoiceRuleViolate, "[LoveCode] must be empty when [Donation] is 2."
+                        raise ECpayInvoiceRuleViolate, "[LoveCode] must be empty when [Donation] is 0."
                     end
                 end
 
@@ -646,13 +646,13 @@ module ECpayInvoice
                     end
                 end
 
-                #e 統一編號[CustomerIdentifier]有值時 => CarruerType != 1, 2 or 3, *Donation = 2, print = 1
+                #e 統一編號[CustomerIdentifier]有值時 => CarruerType != 1, 2 or 3, *Donation = 0, print = 1
                 unless params['CustomerIdentifier'].to_s.empty?
                     if ['1', '2', '3'].include?(params['CarruerType'].to_s)
                         raise ECpayInvoiceRuleViolate, "[CarruerType] Cannot be 1, 2 or 3 when [CustomerIdentifier] is given."
                     end
-                    unless params['Donation'].to_s == '2' and params['Print'].to_s == '1'
-                        raise ECpayInvoiceRuleViolate, "[Print] must be 1 and [Donation] must be 2 when [CustomerIdentifier] is given."
+                    unless params['Donation'].to_s == '0' and params['Print'].to_s == '1'
+                        raise ECpayInvoiceRuleViolate, "[Print] must be 1 and [Donation] must be 0 when [CustomerIdentifier] is given."
                     end
                 end
 
@@ -684,7 +684,7 @@ module ECpayInvoice
                     unless params['CustomerID'].to_s.empty?
                         raise ECpayInvoiceRuleViolate, "[CustomerID] must be empty when [CarruerType] is 3."
                     end
-                    if /^\/[A-Za-z0-9\s+-]{7}$/.match(params['CarruerNum']).nil?
+                    if /^\/[A-Za-z0-9\s+-.]{7}$/.match(params['CarruerNum']).nil?
                         raise ECpayInvoiceRuleViolate, "[CarruerNum] must start with '/' followed by 7 alphabet and number characters when [CarruerType] is 3."
                     end
                 else
@@ -699,10 +699,10 @@ module ECpayInvoice
                     unless params['Print'].to_s == '0'
                         raise ECpayInvoiceRuleViolate, "[Print] must be 0 when [Donation] is 1."
                     end
-                # Donation = 2 => LoveCode不能有值
-                elsif params['Donation'].to_s == '2'
+                # Donation = 0 => LoveCode不能有值
+                elsif params['Donation'].to_s == '0'
                     unless params['LoveCode'].to_s.empty?
-                        raise ECpayInvoiceRuleViolate, "[LoveCode] must be empty when [Donation] is 2."
+                        raise ECpayInvoiceRuleViolate, "[LoveCode] must be empty when [Donation] is 0."
                     end
                 end
 
