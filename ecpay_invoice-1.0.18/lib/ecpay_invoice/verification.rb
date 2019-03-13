@@ -392,8 +392,8 @@ module ECpayInvoice
                 # 商品價錢含有管線 => 認為是多樣商品 *ItemCount ， *ItemPrice ， *ItemAmount 逐一用管線分割，計算數量後與第一個比對
                 if params['vat'].to_s == '0'
                     if !params['ItemPrice'].include?('|')
-                        unless params['ItemAmount'].to_f == (params['ItemPrice'].to_f * params['ItemCount'].to_i * @tax_fee).round(1)
-                            raise ECpayInvoiceRuleViolate, %Q{[ItemPrice] (#{params['ItemPrice'].to_i}) times [ItemCount] (#{params['ItemCount'].to_i}) '*' tax (#{@tax_fee}) subtotal not equal [ItemAmount] (#{params['ItemAmount'].to_i})}
+                        unless params['ItemAmount'].to_f == (params['ItemPrice'].to_f * params['ItemCount'].to_i * @tax_fee).round(2)
+                            raise ECpayInvoiceRuleViolate, %Q{[ItemPrice] (#{params['ItemPrice'].to_f}) times [ItemCount] (#{params['ItemCount'].to_i}) '*' tax (#{@tax_fee}) subtotal not equal [ItemAmount] (#{params['ItemAmount'].to_f})}
                         end
                         # 驗證單筆商品合計是否等於發票金額
                         unless params['SalesAmount'].to_i == (params['ItemAmount'].to_f).round
@@ -426,7 +426,7 @@ module ECpayInvoice
                                     raise ECpayInvoiceRuleViolate, "[ItemTaxType] can not be (#{vat_tax_arr[index - 1]}). Avaliable option: (1, 2, 3)."
                                 end
                             end
-                            unless vat_amount_arr[index - 1].to_f == (vat_price_arr[index - 1].to_f * vat_count_arr[index - 1].to_i * @tax_fee).round(1)
+                            unless vat_amount_arr[index - 1].to_f == (vat_price_arr[index - 1].to_f * vat_count_arr[index - 1].to_i * @tax_fee).round(2)
                                 raise ECpayInvoiceRuleViolate, %Q{[ItemPrice] (#{vat_price_arr[index - 1].to_f}) times [ItemCount] (#{vat_count_arr[index - 1].to_f}) '*' tax(#{@tax_fee}) not match [ItemAmount] (#{vat_amount_arr[index - 1].to_f})}
                             end
                             #Verify ItemAmount subtotal equal SalesAmount
@@ -448,7 +448,7 @@ module ECpayInvoice
                 if params['vat'].to_s == '1'
                     if !params['ItemPrice'].include?('|')
 
-                        unless params['ItemAmount'].to_f == (params['ItemPrice'].to_f * params['ItemCount'].to_i / @tax_fee).round(1)
+                        unless params['ItemAmount'].to_f == (params['ItemPrice'].to_f * params['ItemCount'].to_i / @tax_fee).round(2)
 
                             raise ECpayInvoiceRuleViolate, %Q{[ItemPrice] (#{params['ItemPrice'].to_f}) times [ItemCount] (#{params['ItemCount'].to_f}) '/' tax (#{@tax_fee}) subtotal not equal [ItemAmount] (#{params['ItemAmount'].to_f})}
                         end
@@ -482,7 +482,7 @@ module ECpayInvoice
                                     raise ECpayInvoiceRuleViolate, "[ItemTaxType] can not be (#{vat_tax_arr[index - 1]}). Avaliable option: (1, 2, 3)."
                                 end
                             end
-                            unless vat_amount_arr[index - 1].to_f == (vat_price_arr[index - 1].to_f * vat_count_arr[index - 1].to_i / @tax_fee).round(1)
+                            unless vat_amount_arr[index - 1].to_f == (vat_price_arr[index - 1].to_f * vat_count_arr[index - 1].to_i / @tax_fee).round(2)
                                 raise ECpayInvoiceRuleViolate, %Q{[ItemPrice] (#{vat_price_arr[index - 1]}) times [ItemCount] (#{vat_count_arr[index - 1]}) '/' tax(#{@tax_fee}) not match [ItemAmount] (#{vat_amount_arr[index - 1].to_i})}
                             end
                             #Verify ItemAmount subtotal equal SalesAmount
@@ -709,7 +709,7 @@ module ECpayInvoice
                 vat_params = @vat_params_list
                 # 商品價錢含有管線 => 認為是多樣商品 *ItemCount ， *ItemPrice ， *ItemAmount 逐一用管線分割，計算數量後與第一個比對
                 if !params['ItemPrice'].include?('|')
-                    unless params['ItemAmount'].to_f == (params['ItemPrice'].to_f * params['ItemCount'].to_i / @tax_fee).round(1)
+                    unless params['ItemAmount'].to_f == (params['ItemPrice'].to_f * params['ItemCount'].to_i / @tax_fee).round(2)
                         raise ECpayInvoiceRuleViolate, %Q{[ItemPrice] (#{params['ItemPrice'].to_i}) times [ItemCount] (#{params['ItemCount'].to_i}) '/' tax (#{@tax_fee}) subtotal not equal [ItemAmount] (#{params['ItemAmount'].to_i})}
                     end
                     # 驗證單筆商品合計是否等於發票金額
@@ -742,7 +742,7 @@ module ECpayInvoice
                                 raise ECpayInvoiceRuleViolate, "[ItemTaxType] can not be (#{vat_tax_arr[index - 1]}). Avaliable option: (1, 2, 3)."
                             end
                         end
-                        unless vat_amount_arr[index - 1].to_f == (vat_price_arr[index - 1].to_f * vat_count_arr[index - 1].to_f / @tax_fee).round(1)
+                        unless vat_amount_arr[index - 1].to_f == (vat_price_arr[index - 1].to_f * vat_count_arr[index - 1].to_f / @tax_fee).round(2)
                             raise ECpayInvoiceRuleViolate, %Q{[ItemPrice] (#{vat_price_arr[index - 1]}) times [ItemCount] (#{vat_count_arr[index - 1]}) '/' tax(#{@tax_fee}) not match [ItemAmount] (#{vat_amount_arr[index - 1].to_i})}
                         end
                         #Verify ItemAmount subtotal equal SalesAmount
@@ -856,7 +856,7 @@ module ECpayInvoice
                 # 商品價錢含有管線 => 認為是多樣商品 *ItemCount ， *ItemPrice ， *ItemAmount 逐一用管線分割，計算數量後與第一個比對
                 # 驗證單筆ItemAmount = (ItemPrice * ItemCount)
                 if !params['ItemPrice'].include?('|')
-                    unless params['ItemAmount'].to_f == (params['ItemPrice'].to_f * params['ItemCount'].to_i).round(1)
+                    unless params['ItemAmount'].to_f == (params['ItemPrice'].to_f * params['ItemCount'].to_i).round(2)
                         raise ECpayInvoiceRuleViolate, %Q{[ItemPrice] (#{params['ItemPrice'].to_i}) times [ItemCount] (#{params['ItemCount'].to_i}) subtotal not equal [ItemAmount] (#{params['ItemAmount'].to_i})}
                     end
                     # 驗證單筆商品合計是否等於發票金額
@@ -879,7 +879,7 @@ module ECpayInvoice
                     vat_price_arr = params['ItemPrice'].split('|')
                     vat_count_arr = params['ItemCount'].split('|')
                     (1..vat_cnt).each do |index|
-                        unless vat_amount_arr[index - 1].to_f == (vat_price_arr[index - 1].to_f * vat_count_arr[index - 1].to_f).round(1)
+                        unless vat_amount_arr[index - 1].to_f == (vat_price_arr[index - 1].to_f * vat_count_arr[index - 1].to_f).round(2)
                             raise ECpayInvoiceRuleViolate, %Q{[ItemPrice] (#{vat_price_arr[index - 1]}) times [ItemCount] (#{vat_count_arr[index - 1]}) not match [ItemAmount] (#{vat_amount_arr[index - 1].to_i})}
                         end
                         #Verify ItemAmount subtotal equal SalesAmount
