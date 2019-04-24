@@ -220,24 +220,10 @@ module ECpayInvoice
                 end
 
                 #2. 比對特殊欄位值相依需求
-                #a [CarruerType]為 1 => CustomerID 不能為空
-                if params['CarruerType'].to_s == '1'
-                    if params['CustomerID'].to_s.empty?
-                        raise ECpayInvoiceRuleViolate, "[CustomerID] can not be empty when [CarruerType] is 1."
-                    end
-                # [CustomerID]不為空 => CarruerType 不能為空
-                elsif params['CarruerType'].to_s == ''
-                    unless params['CustomerID'].to_s.empty?
-                        raise ECpayInvoiceRuleViolate, "[CarruerType] can not be empty when [CustomerID] is not empty."
-                    end
-                end
                 #b 列印註記[Print]為 1 => CustomerName, CustomerAddr
                 if params['Print'].to_s == '1'
                     if params['CustomerName'].to_s.empty? or params['CustomerAddr'].to_s.empty?
                         raise ECpayInvoiceRuleViolate, "[CustomerName] and [CustomerAddr] can not be empty when [Print] is 1."
-                    end
-                    unless params['CustomerID'].to_s.empty?
-                        raise ECpayInvoiceRuleViolate, "[Print] can not be '1' when [CustomerID] is not empty."
                     end
                     unless params['CarruerType'].to_s.empty?
                         raise ECpayInvoiceRuleViolate, "[Print] can not be '1' when [CarruerType] is not empty."
@@ -569,24 +555,10 @@ module ECpayInvoice
                 end
 
                 #2. 比對特殊欄位值相依需求
-                #a [CarruerType]為 1 => CustomerID 不能為空
-                if params['CarruerType'].to_s == '1'
-                    if params['CustomerID'].to_s.empty?
-                        raise ECpayInvoiceRuleViolate, "[CustomerID] can not be empty when [CarruerType] is 1."
-                    end
-                    # [CustomerID]不為空 => CarruerType 不能為空
-                elsif params['CarruerType'].to_s == ''
-                    unless params['CustomerID'].to_s.empty?
-                        raise ECpayInvoiceRuleViolate, "[CarruerType] can not be empty when [CustomerID] is not empty."
-                    end
-                end
                 #b 列印註記[Print]為 1 => CustomerName, CustomerAddr
                 if params['Print'].to_s == '1'
                     if params['CustomerName'].to_s.empty? or params['CustomerAddr'].to_s.empty?
                         raise ECpayInvoiceRuleViolate, "[CustomerName] and [CustomerAddr] can not be empty when [Print] is 1."
-                    end
-                    unless params['CustomerID'].to_s.empty?
-                        raise ECpayInvoiceRuleViolate, "[Print] can not be '1' when [CustomerID] is not empty."
                     end
                     unless params['CarruerType'].to_s.empty?
                         raise ECpayInvoiceRuleViolate, "[Print] can not be '1' when [CarruerType] is not empty."
