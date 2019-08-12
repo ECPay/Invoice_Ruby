@@ -3,18 +3,18 @@ require 'ecpay_invoice'
 		## 參數值為[PLEASE MODIFY]者，請每次測試時給予獨特值
 		inv_delay_dict = {
 			"RelateNumber"=>"PLEASEdsadsadsaMODIFY", # 請帶30碼uid, ex: werntfg9os48trhw34etrwerh8ew2r
-			"CustomerID"=>"",
+			"CustomerID"=>"123",
 			"CustomerIdentifier"=>"",
 			"CustomerName"=>"綠先生",
 			"CustomerAddr"=>"台北市南港區三重路19-2號6-2樓",
 			"CustomerPhone"=>"0912345678",
 			"CustomerEmail"=>"ying.wu@ecpay.com.tw",
 			"ClearanceMark"=>"",
-			"Print"=>"0",
-			"Donation"=>"2",
+			"Print"=>"1",
+			"Donation"=>"0",
 			"LoveCode"=>"",
-			"CarruerType"=>"3",
-			"CarruerNum"=>"/.......",
+			"CarruerType"=>"",
+			"CarruerNum"=>"",
 			"TaxType"=>"1",
 			"SalesAmount"=>"600",
 			"InvoiceRemark"=>"",
